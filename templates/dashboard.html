@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Demo - Dashboard | Reporte</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#222;
+      --accent:#4f46e5;
+      --muted:#6b7280;
+      --success:#16a34a;
+    }
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    .dash-container{max-width:1100px;margin:36px auto;padding:20px}
+    .dash-header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .dash-title{display:flex;flex-direction:column}
+    .dash-title h1{margin:0;font-size:20px}
+    .dash-title p{margin:2px 0 0;color:var(--muted);font-size:13px}
+
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+    .stat-card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+    .stat-label{font-size:13px;color:var(--muted)}
+    .stat-value{font-size:20px;font-weight:600;margin-top:6px;color:var(--text);}
+
+    .charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:18px}
+    .panel{background:var(--card);padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+    .panel h3{margin:0 0 8px}
+    canvas{width:100% !important;height:auto !important}
+
+    .controls{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(79,70,229,0.12)}
+
+    /* FAB */
+    .fab{position:fixed;right:22px;bottom:22px;background:var(--accent);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(79,70,229,0.18);cursor:pointer;z-index:1000}
+    .fab:active{transform:scale(.98)}
+    .palette-panel{position:fixed;right:22px;bottom:92px;background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 24px rgba(2,6,23,0.12);display:none;flex-direction:column;gap:8px;z-index:1000}
+    .swatches{display:flex;gap:8px}
+    .swatch{width:34px;height:34px;border-radius:8px;border:2px solid rgba(255,255,255,0.4);cursor:pointer}
+    .picker-row{display:flex;gap:8px;align-items:center}
+    .color-input{width:40px;height:36px;border-radius:6px;border:1px solid #eee;padding:0}
+
+    /* Small screens */
+    @media (max-width:800px){
+      .charts-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-container">
+    <div class="dash-header">
+      <div class="dash-title">
+        <h1>Dashboard de Demostración</h1>
+        <p>Panel ficticio con métricas de ejemplo — solo demo</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="stat-card">
+        <div class="stat-label">Usuarios activos</div>
+        <div class="stat-value">8,342</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:8px">Última 24h: +4.3%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ingresos (mes)</div>
+        <div class="stat-value">Bs. 124,560</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:8px">Proyección: +12% vs mes anterior</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Conversiones</div>
+        <div class="stat-value">3.8%</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:8px">Objetivo: 5%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Errores críticos</div>
+        <div class="stat-value" style="color:var(--success)">2</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:8px">Requiere revisión</div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="panel">
+        <h3>Visitas y conversiones</h3>
+        <canvas id="lineChart" aria-label="Grafico de visitas"></canvas>
+        <div class="controls">
+          <label class="btn secondary" for="uploadData">Cargar datos</label>
+          <input id="uploadData" type="file" accept=".json,.csv" style="display:none">
+          <button class="btn" id="downloadData" disabled>Descargar datos</button>
+          <span style="color:var(--muted);font-size:13px">(Carga/descarga visible pero no funcional en esta demo)</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="panel">
+          <h3>Segmentos</h3>
+          <canvas id="doughnutChart" aria-label="Chart segmentos"></canvas>
+        </div>
+
+        <div class="panel">
+          <h3>Top Productos</h3>
+          <canvas id="barChart" aria-label="Top productos"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px" class="panel">
+      <h3>Actividad reciente (ficticia)</h3>
+      <ul style="margin:0;padding:0;list-style:none">
+        <li style="padding:8px 0;border-bottom:1px dashed #eee">[09:12] Usuario <strong>ana.s</strong> creó una cuenta</li>
+        <li style="padding:8px 0;border-bottom:1px dashed #eee">[08:58] Compra completada: <strong>Producto A</strong></li>
+        <li style="padding:8px 0;border-bottom:1px dashed #eee">[07:34] Error 500 en /api/data (simulado)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAB y paleta -->
+  <div class="fab" id="fab" title="Cambiar paleta">🎨</div>
+  <div class="palette-panel" id="palettePanel" aria-hidden="true">
+    <div style="font-size:13px;color:var(--muted)">Paleta rápida</div>
+    <div class="swatches">
+      <div class="swatch" data-color="#4f46e5" style="background:#4f46e5"></div>
+      <div class="swatch" data-color="#059669" style="background:#059669"></div>
+      <div class="swatch" data-color="#dc2626" style="background:#dc2626"></div>
+      <div class="swatch" data-color="#0ea5e9" style="background:#0ea5e9"></div>
+      <div class="swatch" data-color="#f59e0b" style="background:#f59e0b"></div>
+    </div>
+    <div class="picker-row">
+      <label style="font-size:13px;color:var(--muted)">Color personalizado</label>
+      <input class="color-input" type="color" id="customColor" value="#4f46e5">
+    </div>
+  </div>
+
+  <!-- Dependencias -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+  <!-- Demo scripts locales (solicitud: usar scripts demo de la carpeta javascript) -->
+  <script src="../javascript/demo-customizer.js"></script>
+  <script src="../javascript/demo-navigation.js"></script>
+
+  <script>
+    // Inicialización rápida de charts con datos ficticios
+    const lineCtx = document.getElementById('lineChart');
+    const barCtx = document.getElementById('barChart');
+    const doughCtx = document.getElementById('doughnutChart');
+
+    const lineChart = new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'],
+        datasets: [
+          {label:'Visitas',data:[120,220,180,260,340,300,420],borderColor:getComputedStyle(document.documentElement).getPropertyValue('--accent')||'#4f46e5',backgroundColor:'rgba(79,70,229,0.08)',tension:0.3},
+          {label:'Conversiones',data:[3,7,5,9,12,8,15],borderColor:'#059669',backgroundColor:'rgba(5,150,105,0.08)',tension:0.3,yAxisID:'y1'}
+        ]
+      },
+      options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{beginAtZero:true},y1:{position:'right',grid:{display:false}}}}
+    });
+
+    const barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Producto A','B','C','D'],
+        datasets: [{
+          label: 'Ventas',
+          data: [320,210,180,95],
+          backgroundColor: ['#4f46e5','#0ea5e9','#f59e0b','#059669']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    const dough = new Chart(doughCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Directo','Orgánico','Referidos'],
+        datasets: [{
+          data: [55,30,15],
+          backgroundColor: ['#4f46e5','#059669','#f59e0b']
+        }]
+      },
+      options: { responsive: true }
+    });
+
+    // Paleta / FAB
+    const fab = document.getElementById('fab');
+    const panel = document.getElementById('palettePanel');
+    const swatches = document.querySelectorAll('.swatch');
+    const custom = document.getElementById('customColor');
+
+    fab.addEventListener('click',()=>{
+      const open = panel.style.display === 'flex';
+      panel.style.display = open ? 'none' : 'flex';
+      panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+    });
+
+    function applyAccent(color){
+      document.documentElement.style.setProperty('--accent', color);
+      // actualizar color en charts
+      lineChart.data.datasets[0].borderColor = color; lineChart.update();
+    }
+
+    swatches.forEach(s=>s.addEventListener('click',()=>{applyAccent(s.dataset.color)}));
+    custom.addEventListener('input',()=>applyAccent(custom.value));
+
+    // Carga visual de archivo (no funcional) -- solo se muestra nombre
+    const upload = document.getElementById('uploadData');
+    upload.addEventListener('change',(e)=>{
+      if(e.target.files.length){
+        const name=e.target.files[0].name;
+        alert('Archivo seleccionado (demo): '+name+' — la carga no procesa datos en esta demo.');
+      }
+    });
+
+    // Botón descargar -- no funcional, solo feedback
+    document.getElementById('downloadData').addEventListener('click',()=>{
+      alert('Descarga simulada: exportarías los datos actuales. (no funcional en demo)');
+    });
+  </script>
+</body>
+</html>

@@ -670,54 +670,14 @@ img {
 .proyecto-card {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
-    overflow: visible;
+    overflow: hidden;
     border: 1px solid var(--color-border);
     transition: all var(--transition-base);
-    perspective: 1000px;
     height: auto;
-    min-height: 700px;
+    min-height: 600px;
     max-width: 100%;
-}
-
-/* Flip Card Structure */
-.proyecto-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-}
-
-.proyecto-card.flipped .proyecto-card-inner {
-    transform: rotateY(180deg);
-}
-
-.proyecto-card-front,
-.proyecto-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-     min-height: 700px;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-}
-
-.proyecto-card-front {
-    background: var(--color-surface);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-}
-
-.proyecto-card-back {
-    background: var(--color-surface);
-    transform: rotateY(180deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-xl);
 }
 
 .proyecto-card:hover {
@@ -832,82 +792,6 @@ img {
     transform: translateX(4px);
 }
 
-/* Demo container styles */
-.demo-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.demo-container h4 {
-    font-size: var(--text-2xl);
-    margin-bottom: var(--spacing-lg);
-    color: var(--color-primary);
-}
-
-.demo-placeholder {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-xl);
-    background: var(--color-background-alt);
-    border-radius: var(--radius-md);
-    width: 100%;
-    color: var(--color-text-secondary);
-}
-
-.demo-placeholder p {
-    max-width: 300px;
-    line-height: 1.6;
-}
-
-.demo-placeholder svg {
-    opacity: 0.3;
-}
-
-.btn-volver {
-    margin-top: var(--spacing-md);
-    padding: 0.75rem 1.5rem;
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all var(--transition-base);
-}
-
-.btn-volver:hover {
-    background: var(--color-primary-hover);
-    transform: translateX(-4px);
-}
-
-.btn-ver-demo {
-    background: transparent;
-    border: 2px solid var(--color-primary);
-    color: var(--color-primary);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-base);
-}
-
-.btn-ver-demo:hover {
-    background: var(--color-primary);
-    color: white;
-    transform: translateY(-2px);
-}
-
 /* ==================== Sobre Mí Section ==================== */
 .sobre-mi {
     background: var(--color-background);
@@ -920,23 +804,11 @@ img {
 }
 
 .sobre-mi-text {
-    max-width: 700px;
-}
-
-.sobre-mi-intro {
-    font-size: var(--text-xl);
-    color: var(--color-text);
-    margin-bottom: var(--spacing-md);
-    font-weight: 500;
-}
-
-.sobre-mi-text p {
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-md);
+    max-width: 100%;
 }
 
 .skills-container {
-    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
     padding: var(--spacing-xl);
     background: var(--color-surface);
     border-radius: var(--radius-lg);
@@ -946,6 +818,7 @@ img {
 .skills-title {
     font-size: var(--text-2xl);
     margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
 }
 
 .skills-grid {
@@ -975,6 +848,45 @@ img {
     color: var(--color-primary);
 }
 
+/* Soft Skills Styles */
+.soft-skills-container {
+    margin-top: var(--spacing-xl);
+}
+
+.soft-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.soft-skill-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--color-background-alt);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    border: 1px solid transparent;
+}
+
+.soft-skill-item:hover {
+    border-color: var(--color-primary);
+    transform: translateX(8px);
+}
+
+.soft-skill-item svg {
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.soft-skill-item span {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+/* Updated Stats Cards */
 .sobre-mi-stats {
     display: flex;
     flex-direction: column;
@@ -988,19 +900,36 @@ img {
     text-align: center;
     color: white;
     box-shadow: 0 8px 20px rgba(242, 79, 19, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
 }
 
-.stat-number {
-    display: block;
-    font-size: var(--text-5xl);
-    font-weight: 800;
+.stat-card svg {
     margin-bottom: var(--spacing-xs);
 }
 
 .stat-label {
     display: block;
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     opacity: 0.9;
+    font-weight: 600;
+}
+
+.stat-value {
+    display: block;
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-description {
+    display: block;
+    font-size: var(--text-sm);
+    opacity: 0.85;
 }
 
 /* ==================== Contacto Section ==================== */
@@ -1429,6 +1358,10 @@ img {
         grid-template-columns: 1fr;
     }
     
+    .soft-skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
     .sobre-mi-stats {
         flex-direction: column;
     }
@@ -1487,22 +1420,17 @@ img {
         padding: var(--spacing-2xl) 0;
     }
     
-        .proyectos-carousel-container {
-            padding: 0 30px;
-        }
-    
-        .proyecto-card {
-            min-height: 550px;
-        }
-    
-        .proyecto-card-front,
-        .proyecto-card-back {
-            min-height: 550px;
-        }
-    
-        .proyecto-title {
-            font-size: var(--text-lg);
-        }
+    .proyectos-carousel-container {
+        padding: 0 30px;
+    }
+
+    .proyecto-card {
+        min-height: 550px;
+    }
+
+    .proyecto-title {
+        font-size: var(--text-lg);
+    }
     
         .proyecto-description {
             font-size: 0.875rem;

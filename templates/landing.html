@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Landing Page Demo - Soluciones innovadoras para tu negocio">
+    <title>Demo Landing Page | Tu Negocio</title>
+    <style>
+        :root {
+            --color-primary: #3b82f6;
+            --color-secondary: #8b5cf6;
+            --color-accent: #10b981;
+            --color-text: #1f2937;
+            --color-bg: #ffffff;
+            --color-bg-alt: #f3f4f6;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            transition: var(--transition);
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--color-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 80px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-image {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Section Common Styles */
+        .section {
+            padding: 80px 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--color-bg-alt);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 20px;
+            padding: 2rem;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .service-card p {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        /* Products Section */
+        .products {
+            background: var(--color-bg-alt);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .product-price {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin: 1rem 0;
+        }
+
+        .product-content p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            padding: 0.5rem 0;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .product-features li::before {
+            content: "✓";
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .contact-info p {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-details {
+            list-style: none;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            color: #4b5563;
+        }
+
+        .contact-detail svg {
+            color: var(--color-primary);
+        }
+
+        .contact-form {
+            background: var(--color-bg-alt);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--color-text);
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* FAB Button */
+        .fab-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+        }
+
+        .fab-main {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab-main:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .fab-main.active {
+            transform: rotate(45deg);
+        }
+
+        .fab-options {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .fab-options.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .fab-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .fab-option:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            color: var(--color-text);
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--color-text);
+        }
+
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .color-option {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .color-option:hover {
+            transform: scale(1.05);
+        }
+
+        .color-option.selected {
+            border-color: var(--color-text);
+        }
+
+        .custom-color-input {
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid #e5e7eb;
+        }
+
+        .editable-section {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--color-bg-alt);
+            border-radius: 8px;
+        }
+
+        .editable-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero-container,
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fab-container {
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+
+        /* Edit Mode Styles */
+        .edit-mode [contenteditable="true"] {
+            outline: 2px dashed var(--color-primary);
+            outline-offset: 4px;
+            padding: 0.25rem;
+            border-radius: 4px;
+            cursor: text;
+        }
+
+        .edit-mode [contenteditable="true"]:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo" contenteditable="false" data-editable="logo">TuNegocio</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link">Inicio</a></li>
+                <li><a href="#about" class="nav-link">Nosotros</a></li>
+                <li><a href="#services" class="nav-link">Servicios</a></li>
+                <li><a href="#products" class="nav-link">Productos</a></li>
+                <li><a href="#contact" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 contenteditable="false" data-editable="hero-title">Soluciones Innovadoras para Tu Negocio</h1>
+                <p contenteditable="false" data-editable="hero-description">Transformamos tus ideas en realidad con tecnología de vanguardia y diseño excepcional. Llevamos tu negocio al siguiente nivel.</p>
+                <div class="btn-group">
+                    <a href="#products" class="btn btn-primary" contenteditable="false" data-editable="hero-btn1">Ver Productos</a>
+                    <a href="#contact" class="btn btn-secondary" contenteditable="false" data-editable="hero-btn2">Contactar</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="placeholder-img">
+                    <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" contenteditable="false" data-editable="about-title">Sobre Nosotros</h2>
+                <p class="section-subtitle" contenteditable="false" data-editable="about-subtitle">Conoce más sobre nuestra empresa y lo que nos hace únicos</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="placeholder-img">
+                        <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3 contenteditable="false" data-editable="about-heading">¿Quiénes Somos?</h3>
+                    <p contenteditable="false" data-editable="about-text1">Somos una empresa líder en soluciones tecnológicas con más de 10 años de experiencia en el mercado. Nuestro equipo de expertos se dedica a proporcionar servicios de alta calidad que impulsan el crecimiento de tu negocio.</p>
+                    <p contenteditable="false" data-editable="about-text2">Nos especializamos en crear experiencias digitales excepcionales que conectan con tu audiencia y generan resultados medibles. Tu éxito es nuestro éxito.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number" contenteditable="false" data-editable="stat1-number">500+</span>
+                            <span class="stat-label" contenteditable="false" data-editable="stat1-label">Proyectos Completados</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" contenteditable="false" data-editable="stat2-number">98%</span>
+                            <span class="stat-label" contenteditable="false" data-editable="stat2-label">Satisfacción del Cliente</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" contenteditable="false" data-editable="stat3-number">24/7</span>
+                            <span class="stat-label" contenteditable="false" data-editable="stat3-label">Soporte Técnico</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" contenteditable="false" data-editable="services-title">Nuestros Servicios</h2>
+                <p class="section-subtitle" contenteditable="false" data-editable="services-subtitle">Ofrecemos una amplia gama de servicios profesionales adaptados a tus necesidades</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3 contenteditable="false" data-editable="service1-title">Consultoría Estratégica</h3>
+                    <p contenteditable="false" data-editable="service1-description">Asesoramiento experto para optimizar tu estrategia de negocio y alcanzar tus objetivos de manera eficiente.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3 contenteditable="false" data-editable="service2-title">Desarrollo de Software</h3>
+                    <p contenteditable="false" data-editable="service2-description">Soluciones de software personalizadas que impulsan la innovación y mejoran la productividad de tu empresa.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3 contenteditable="false" data-editable="service3-title">Diseño UX/UI</h3>
+                    <p contenteditable="false" data-editable="service3-description">Interfaces intuitivas y atractivas que mejoran la experiencia del usuario y aumentan la conversión.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3 contenteditable="false" data-editable="service4-title">Marketing Digital</h3>
+                    <p contenteditable="false" data-editable="service4-description">Estrategias de marketing digital efectivas para aumentar tu presencia online y atraer más clientes.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3 contenteditable="false" data-editable="service5-title">Seguridad Informática</h3>
+                    <p contenteditable="false" data-editable="service5-description">Protección avanzada de tus datos y sistemas contra amenazas cibernéticas y vulnerabilidades.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3 contenteditable="false" data-editable="service6-title">Cloud Computing</h3>
+                    <p contenteditable="false" data-editable="service6-description">Infraestructura en la nube escalable y segura para mantener tu negocio siempre operativo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" contenteditable="false" data-editable="products-title">Nuestros Productos</h2>
+                <p class="section-subtitle" contenteditable="false" data-editable="products-subtitle">Descubre nuestros productos diseñados para llevar tu negocio al éxito</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="placeholder-img">
+                            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 contenteditable="false" data-editable="product1-title">Plan Básico</h3>
+                        <p class="product-price" contenteditable="false" data-editable="product1-price">$29.99/mes</p>
+                        <p contenteditable="false" data-editable="product1-description">Perfecto para pequeñas empresas que están comenzando su viaje digital.</p>
+                        <ul class="product-features">
+                            <li contenteditable="false" data-editable="product1-feature1">5 Usuarios incluidos</li>
+                            <li contenteditable="false" data-editable="product1-feature2">10 GB de almacenamiento</li>
+                            <li contenteditable="false" data-editable="product1-feature3">Soporte por email</li>
+                            <li contenteditable="false" data-editable="product1-feature4">Actualizaciones mensuales</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary" style="width: 100%; text-align: center;">Elegir Plan</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="placeholder-img">
+                            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 contenteditable="false" data-editable="product2-title">Plan Profesional</h3>
+                        <p class="product-price" contenteditable="false" data-editable="product2-price">$79.99/mes</p>
+                        <p contenteditable="false" data-editable="product2-description">Ideal para empresas en crecimiento que necesitan más potencia y flexibilidad.</p>
+                        <ul class="product-features">
+                            <li contenteditable="false" data-editable="product2-feature1">20 Usuarios incluidos</li>
+                            <li contenteditable="false" data-editable="product2-feature2">100 GB de almacenamiento</li>
+                            <li contenteditable="false" data-editable="product2-feature3">Soporte prioritario 24/7</li>
+                            <li contenteditable="false" data-editable="product2-feature4">Integraciones avanzadas</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary" style="width: 100%; text-align: center;">Elegir Plan</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <div class="placeholder-img">
+                            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                <path d="M12 2v20"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 contenteditable="false" data-editable="product3-title">Plan Enterprise</h3>
+                        <p class="product-price" contenteditable="false" data-editable="product3-price">$199.99/mes</p>
+                        <p contenteditable="false" data-editable="product3-description">La solución completa para grandes empresas con necesidades personalizadas.</p>
+                        <ul class="product-features">
+                            <li contenteditable="false" data-editable="product3-feature1">Usuarios ilimitados</li>
+                            <li contenteditable="false" data-editable="product3-feature2">Almacenamiento ilimitado</li>
+                            <li contenteditable="false" data-editable="product3-feature3">Gestor de cuenta dedicado</li>
+                            <li contenteditable="false" data-editable="product3-feature4">Personalización completa</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary" style="width: 100%; text-align: center;">Elegir Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" contenteditable="false" data-editable="contact-title">Contacto</h2>
+                <p class="section-subtitle" contenteditable="false" data-editable="contact-subtitle">¿Tienes alguna pregunta? Estamos aquí para ayudarte</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 contenteditable="false" data-editable="contact-info-title">Información de Contacto</h3>
+                    <p contenteditable="false" data-editable="contact-info-text">Estamos disponibles para responder todas tus dudas y ayudarte a encontrar la mejor solución para tu negocio.</p>
+                    <ul class="contact-details">
+                        <li class="contact-detail">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span contenteditable="false" data-editable="contact-email">info@tunegocio.com</span>
+                        </li>
+                        <li class="contact-detail">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span contenteditable="false" data-editable="contact-phone">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="contact-detail">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span contenteditable="false" data-editable="contact-address">123 Calle Principal, Ciudad, País</span>
+                        </li>
+                    </ul>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label">Nombre Completo</label>
+                        <input type="text" class="form-input" placeholder="Juan Pérez" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Asunto</label>
+                        <input type="text" class="form-input" placeholder="¿En qué podemos ayudarte?" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mensaje</label>
+                        <textarea class="form-textarea" placeholder="Cuéntanos más sobre tu proyecto..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 contenteditable="false" data-editable="footer-title1">TuNegocio</h4>
+                <p contenteditable="false" data-editable="footer-text1">Transformando ideas en realidad desde 2010. Tu socio confiable en soluciones digitales.</p>
+            </div>
+            <div class="footer-section">
+                <h4 contenteditable="false" data-editable="footer-title2">Enlaces Rápidos</h4>
+                <a href="#about">Nosotros</a>
+                <a href="#services">Servicios</a>
+                <a href="#products">Productos</a>
+                <a href="#contact">Contacto</a>
+            </div>
+            <div class="footer-section">
+                <h4 contenteditable="false" data-editable="footer-title3">Legal</h4>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Política de Cookies</a>
+            </div>
+            <div class="footer-section">
+                <h4 contenteditable="false" data-editable="footer-title4">Síguenos</h4>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p contenteditable="false" data-editable="footer-copyright">© 2025 TuNegocio. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- FAB Button -->
+    <div class="fab-container">
+        <div class="fab-options" id="fabOptions">
+            <button class="fab-option" id="colorPickerBtn" title="Cambiar colores">
+                🎨
+            </button>
+            <button class="fab-option" id="editTextBtn" title="Editar texto">
+                ✏️
+            </button>
+        </div>
+        <button class="fab-main" id="fabMain" aria-label="Opciones de personalización">
+            ⚙️
+        </button>
+    </div>
+
+    <!-- Color Picker Modal -->
+    <div class="modal" id="colorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Personalizar Colores</h3>
+                <button class="modal-close" id="closeColorModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4 style="margin-bottom: 1rem; color: var(--color-text);">Paletas Predefinidas</h4>
+                <div class="color-picker-grid">
+                    <div class="color-option" data-primary="#3b82f6" data-secondary="#8b5cf6" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">Azul</div>
+                    <div class="color-option" data-primary="#ef4444" data-secondary="#f59e0b" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">Rojo</div>
+                    <div class="color-option" data-primary="#10b981" data-secondary="#059669" style="background: linear-gradient(135deg, #10b981, #059669);">Verde</div>
+                    <div class="color-option" data-primary="#8b5cf6" data-secondary="#ec4899" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">Púrpura</div>
+                    <div class="color-option" data-primary="#f59e0b" data-secondary="#ef4444" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">Naranja</div>
+                    <div class="color-option" data-primary="#06b6d4" data-secondary="#0891b2" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">Cyan</div>
+                </div>
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--color-text);">Color Personalizado</h4>
+                <div class="form-group">
+                    <label class="form-label">Color Principal</label>
+                    <input type="color" class="custom-color-input" id="customPrimary" value="#3b82f6">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Color Secundario</label>
+                    <input type="color" class="custom-color-input" id="customSecondary" value="#8b5cf6">
+                </div>
+                <button class="btn btn-primary" id="applyCustomColors" style="width: 100%; margin-top: 1rem;">Aplicar Colores</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Text Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Modo de Edición</h3>
+                <button class="modal-close" id="closeEditModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: #6b7280; margin-bottom: 1.5rem;">Haz clic en cualquier texto de la página para editarlo. Los cambios se guardan automáticamente.</p>
+                <button class="btn btn-primary" id="toggleEditMode" style="width: 100%;">Activar Modo Edición</button>
+                <button class="btn btn-primary" id="resetContent" style="width: 100%; margin-top: 1rem;">Restaurar Contenido Original</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../javascript/demo-customizer.js"></script>
+    <script src="../javascript/demo-navigation.js"></script>
+</body>
+</html>

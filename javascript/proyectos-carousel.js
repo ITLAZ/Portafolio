@@ -1,6 +1,6 @@
 /**
- * Carrusel de Proyectos con Flip Cards
- * Maneja la navegación del carrusel, animaciones de flip y auto-relleno del formulario
+ * Carrusel de Proyectos
+ * Maneja la navegación del carrusel y auto-relleno del formulario
  */
 
 class ProyectosCarousel {
@@ -29,9 +29,6 @@ class ProyectosCarousel {
         this.indicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => this.goToSlide(index));
         });
-
-        // Event listeners para flip cards
-        this.initFlipCards();
 
         // Event listeners para auto-relleno del formulario
         this.initQuoteButtons();
@@ -88,28 +85,6 @@ class ProyectosCarousel {
         // Actualizar indicadores
         this.indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === this.currentSlide);
-        });
-    }
-
-    initFlipCards() {
-        // Botones "Ver Demo"
-        const demoBtns = document.querySelectorAll('.btn-ver-demo');
-        demoBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const card = btn.closest('.proyecto-card');
-                card.classList.add('flipped');
-            });
-        });
-
-        // Botones "Volver"
-        const volverBtns = document.querySelectorAll('.btn-volver');
-        volverBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const card = btn.closest('.proyecto-card');
-                card.classList.remove('flipped');
-            });
         });
     }
 
