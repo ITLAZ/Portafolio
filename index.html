@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portafolio freelance de desarrollo frontend. Servicios de diseño web, aplicaciones web modernas y desarrollo UI/UX.">
-    <title>Frontend Developer | Portafolio</title>
+    <title>ITLAZ | Portafolio</title>
     <link rel="stylesheet" href="assets/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
@@ -16,7 +16,7 @@
             <div class="nav-wrapper">
                 <a href="#hero" class="logo">
                     <span class="logo-bracket">&lt;</span>
-                    <span class="logo-text">Dev</span>
+                    <span class="logo-text">ITLAZ</span>
                     <span class="logo-bracket">/&gt;</span>
                 </a>
                 
@@ -32,24 +32,6 @@
                     <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
                     <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
                     <li><a href="#contacto" class="nav-link">Contacto</a></li>
-                    <li>
-                        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-                            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="5"></circle>
-                                <line x1="12" y1="1" x2="12" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="23"></line>
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                <line x1="1" y1="12" x2="3" y2="12"></line>
-                                <line x1="21" y1="12" x2="23" y2="12"></line>
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                            </svg>
-                            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                            </svg>
-                        </button>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -57,35 +39,20 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
+        <canvas id="heroCanvas"></canvas>
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">
                     <span class="hero-subtitle">Hola, soy</span>
-                    <span class="hero-name">Frontend Developer</span>
+                    <span class="hero-name">Ignacio Tapia</span>
                 </h1>
                 <p class="hero-description">
-                    Creo experiencias web modernas, responsivas y centradas en el usuario. 
-                    Especializado en transformar ideas en interfaces digitales atractivas y funcionales.
+                    Poseo conocimientos en desarrollo web y una base sólida en tecnologías orientadas a la programación y la gestión de información. <br>
+                    Como desarrollador independiente, busco transformar las ideas de mis clientes en productos digitales atractivos y funcionales, manteniendo los estandares de calidad actuales en el mercado.
                 </p>
                 <div class="hero-cta">
-                    <a href="#proyectos" class="btn btn-primary">Ver Proyectos</a>
-                    <a href="#contacto" class="btn btn-secondary">Contactar</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="code-window">
-                    <div class="code-header">
-                        <span class="code-dot"></span>
-                        <span class="code-dot"></span>
-                        <span class="code-dot"></span>
-                    </div>
-                    <div class="code-content">
-                        <pre><code><span class="code-keyword">const</span> <span class="code-variable">developer</span> = {
-  <span class="code-property">name</span>: <span class="code-string">'Frontend Dev'</span>,
-  <span class="code-property">skills</span>: [<span class="code-string">'HTML'</span>, <span class="code-string">'CSS'</span>, <span class="code-string">'JavaScript'</span>],
-  <span class="code-property">passion</span>: <span class="code-string">'UI/UX Design'</span>
-};</code></pre>
-                    </div>
+                    <a href="#proyectos" class="btn-cta">Ver Proyectos</a>
+                    <a href="#contacto" class="btn-cta">Contactar</a>
                 </div>
             </div>
         </div>
@@ -525,6 +492,7 @@
     <!-- Scripts -->
     <script src="javascript/navigation.js"></script>
     <script src="javascript/contact-form.js"></script>
+    <script src="javascript/hero-canvas.js"></script>
     <script src="javascript/index-animations.js"></script>
 </body>
 </html>

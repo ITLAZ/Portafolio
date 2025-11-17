@@ -341,7 +341,7 @@ class ScrollToTop {
             visibility: hidden;
             transform: scale(0.8);
             transition: all 0.3s ease;
-            z-index: 1000;
+            z-index: 900;
         `;
 
         button.addEventListener('click', () => {
@@ -372,8 +372,14 @@ class ScrollToTop {
 
     toggleVisibility() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const footer = document.querySelector('.footer');
+        const footerTop = footer ? footer.offsetTop : documentHeight;
 
-        if (scrollTop > 500) {
+        // Mostrar el botón después de 300px de scroll
+        // Ocultarlo cuando llegamos al footer
+        if (scrollTop > 300 && (scrollTop + windowHeight) < footerTop) {
             this.button.style.opacity = '1';
             this.button.style.visibility = 'visible';
             this.button.style.transform = 'scale(1)';

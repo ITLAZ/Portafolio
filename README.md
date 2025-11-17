@@ -41,7 +41,6 @@ Portafolio/
 - Presentación principal
 - Ventana de código animada
 - Botones de CTA
-- Efectos parallax
 
 ### 3. **Servicios**
 - Grid de tarjetas responsivo

@@ -37,35 +37,12 @@ function initHeroAnimations() {
         y: 30,
         duration: 0.8
     }, '-=0.4')
-    .from('.hero-cta .btn', {
-        opacity: 0,
+    .from('.hero-cta .btn-cta', {
+        opacity: 1,
         y: 20,
         stagger: 0.2,
         duration: 0.6
     }, '-=0.3')
-    .from('.code-window', {
-        opacity: 0,
-        x: 50,
-        scale: 0.95,
-        duration: 1
-    }, '-=0.8');
-    
-    // Animación de typing en el código
-    animateCodeTyping();
-}
-
-// ==================== Animación de Código ====================
-function animateCodeTyping() {
-    const codeLines = document.querySelectorAll('.code-content code span');
-    
-    gsap.from(codeLines, {
-        opacity: 0,
-        x: -10,
-        stagger: 0.1,
-        duration: 0.5,
-        delay: 1.2,
-        ease: 'power2.out'
-    });
 }
 
 // ==================== Animaciones de Secciones ====================
@@ -144,6 +121,10 @@ function initServiciosAnimations() {
 
 // ==================== Animaciones de Proyectos ====================
 function initProyectosAnimations() {
+    // Asegurar que los elementos sean visibles primero
+    gsap.set('.proyecto-card', { opacity: 1, y: 0 });
+    gsap.set('.proyecto-placeholder', { opacity: 1 });
+    
     gsap.utils.toArray('.proyecto-card').forEach((card, index) => {
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -170,20 +151,18 @@ function initProyectosAnimations() {
     });
     
     // Animación de las imágenes placeholder
-    gsap.utils.toArray('.proyecto-placeholder svg').forEach(svg => {
-        gsap.to(svg, {
+    gsap.utils.toArray('.proyecto-placeholder').forEach(placeholder => {
+        gsap.from(placeholder, {
             scrollTrigger: {
-                trigger: svg,
-                start: 'top 80%',
+                trigger: placeholder,
+                start: 'top 85%',
                 end: 'bottom 20%',
                 toggleActions: 'play none none reverse'
             },
-            scale: 1.1,
-            opacity: 0.8,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut'
+            opacity: 0,
+            scale: 0.9,
+            duration: 0.8,
+            ease: 'power2.out'
         });
     });
 }
@@ -299,6 +278,10 @@ function initSkillsAnimation() {
 
 // ==================== Animaciones de Contacto ====================
 function initContactoAnimations() {
+    // Asegurar que el formulario sea visible primero
+    gsap.set('.contacto-form', { opacity: 1, x: 0 });
+    gsap.set('.contacto-detail', { opacity: 1, x: 0 });
+    
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: '.contacto-content',
@@ -368,34 +351,49 @@ function initFooterAnimations() {
 // ==================== Animación del Navbar ====================
 function initNavbarAnimations() {
     const navbar = document.getElementById('navbar');
-    let lastScrollTop = 0;
+    const footer = document.querySelector('.footer');
     
-    // Navbar scroll effect
+    if (!navbar || !footer) return;
+    
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    
+    if (isMobile) {
+        // En mobile, solo agregar clase scrolled, sin ocultar el navbar
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        return;
+    }
+    
+    // Desktop: comportamiento completo con ScrollTrigger
     ScrollTrigger.create({
         start: 'top -80',
         end: 99999,
-        toggleClass: { targets: navbar, className: 'scrolled' },
-        onUpdate: (self) => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // Ocultar/mostrar navbar al hacer scroll
-            if (scrollTop > lastScrollTop && scrollTop > 300) {
-                // Scrolling down
-                gsap.to(navbar, {
-                    y: -100,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            } else {
-                // Scrolling up
-                gsap.to(navbar, {
-                    y: 0,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            }
-            
-            lastScrollTop = scrollTop;
+        toggleClass: { targets: navbar, className: 'scrolled' }
+    });
+    
+    // Ocultar navbar solo cuando llega al footer (desktop)
+    ScrollTrigger.create({
+        trigger: footer,
+        start: 'top bottom',
+        end: 'top top',
+        onEnter: () => {
+            gsap.to(navbar, {
+                y: -100,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        },
+        onLeaveBack: () => {
+            gsap.to(navbar, {
+                y: 0,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
         }
     });
     
@@ -421,34 +419,6 @@ function initNavbarAnimations() {
             }
         });
     }
-}
-
-// ==================== Efectos de Parallax ====================
-function initParallaxEffects() {
-    // Parallax en el hero
-    gsap.to('.hero::before', {
-        scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1
-        },
-        y: 200,
-        scale: 1.2,
-        ease: 'none'
-    });
-    
-    // Parallax en code window
-    gsap.to('.code-window', {
-        scrollTrigger: {
-            trigger: '.hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1
-        },
-        y: 100,
-        ease: 'none'
-    });
 }
 
 // ==================== Cursor Effect (Opcional) ====================
@@ -499,13 +469,33 @@ function initAnimations() {
         return;
     }
     
-    // Configuración global de ScrollTrigger
+    // Detectar si es mobile
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    
+    if (isMobile) {
+        // En mobile, solo aplicar animaciones básicas sin ScrollTrigger
+        console.log('📱 Modo mobile: Animaciones GSAP desactivadas');
+        
+        // Solo animar el hero inicial
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.6 })
+          .from('.hero-name', { opacity: 0, y: 20, duration: 0.6 }, '-=0.3')
+          .from('.hero-description', { opacity: 0, y: 20, duration: 0.6 }, '-=0.3')
+          .from('.hero-cta', { opacity: 0, y: 20, duration: 0.6 }, '-=0.3')
+        
+        // Navbar básico para mobile
+        initNavbarAnimations();
+        
+        return;
+    }
+    
+    // Configuración global de ScrollTrigger (solo desktop)
     ScrollTrigger.config({
         limitCallbacks: true,
         syncInterval: 150
     });
     
-    // Inicializar todas las animaciones
+    // Inicializar todas las animaciones (solo desktop)
     initHeroAnimations();
     initSectionAnimations();
     initServiciosAnimations();
@@ -515,7 +505,6 @@ function initAnimations() {
     initContactoAnimations();
     initFooterAnimations();
     initNavbarAnimations();
-    initParallaxEffects();
     initCursorEffect();
     refreshScrollTrigger();
     
