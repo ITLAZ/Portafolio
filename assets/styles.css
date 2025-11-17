@@ -569,18 +569,155 @@ img {
     background: var(--color-background-alt);
 }
 
+.proyectos-carousel-container {
+    position: relative;
+    padding: 0 60px;
+}
+
+.proyectos-carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
 .proyectos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
     gap: var(--spacing-xl);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.proyectos-grid .proyecto-card {
+    flex: 0 0 calc(50% - var(--spacing-xl) / 2);
+    min-width: calc(50% - var(--spacing-xl) / 2);
+}
+
+/* Botones de navegación del carrusel */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    z-index: 10;
+    box-shadow: 0 4px 12px var(--color-shadow);
+}
+
+.carousel-btn:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.carousel-btn:disabled:hover {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text);
+    transform: translateY(-50%) scale(1);
+}
+
+.carousel-btn-prev {
+    left: 0;
+}
+
+.carousel-btn-next {
+    right: 0;
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xl);
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-border);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    padding: 0;
+}
+
+.indicator:hover {
+    background: var(--color-text-secondary);
+    transform: scale(1.2);
+}
+
+.indicator.active {
+    width: 32px;
+    border-radius: 6px;
+    background: var(--color-primary);
 }
 
 .proyecto-card {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid var(--color-border);
     transition: all var(--transition-base);
+    perspective: 1000px;
+    height: auto;
+    min-height: 700px;
+    max-width: 100%;
+}
+
+/* Flip Card Structure */
+.proyecto-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.proyecto-card.flipped .proyecto-card-inner {
+    transform: rotateY(180deg);
+}
+
+.proyecto-card-front,
+.proyecto-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+     min-height: 700px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.proyecto-card-front {
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.proyecto-card-back {
+    background: var(--color-surface);
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
 }
 
 .proyecto-card:hover {
@@ -611,6 +748,9 @@ img {
 
 .proyecto-content {
     padding: var(--spacing-lg);
+     flex: 1;
+     display: flex;
+     flex-direction: column;
 }
 
 .proyecto-title {
@@ -629,6 +769,7 @@ img {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
     margin-bottom: var(--spacing-md);
+     min-height: 32px;
 }
 
 .tag {
@@ -637,6 +778,38 @@ img {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.proyecto-precio {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, var(--color-primary-alpha) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-md);
+    border-left: 3px solid var(--color-primary);
+}
+
+.precio-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.precio-valor {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+}
+
+.precio-usd {
+    font-size: var(--text-sm);
     color: var(--color-text-secondary);
     font-weight: 500;
 }
@@ -657,6 +830,82 @@ img {
 
 .proyecto-link:hover {
     transform: translateX(4px);
+}
+
+/* Demo container styles */
+.demo-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.demo-container h4 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+}
+
+.demo-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xl);
+    background: var(--color-background-alt);
+    border-radius: var(--radius-md);
+    width: 100%;
+    color: var(--color-text-secondary);
+}
+
+.demo-placeholder p {
+    max-width: 300px;
+    line-height: 1.6;
+}
+
+.demo-placeholder svg {
+    opacity: 0.3;
+}
+
+.btn-volver {
+    margin-top: var(--spacing-md);
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-base);
+}
+
+.btn-volver:hover {
+    background: var(--color-primary-hover);
+    transform: translateX(-4px);
+}
+
+.btn-ver-demo {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-ver-demo:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* ==================== Sobre Mí Section ==================== */
@@ -831,6 +1080,22 @@ img {
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+}
+
+.contacto-form.form-highlight {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(242, 79, 19, 0.1);
+    animation: formPulse 0.6s ease-in-out;
+}
+
+@keyframes formPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
 }
 
 .form-group {
@@ -1026,7 +1291,14 @@ img {
         order: -1;
     }
     
-
+    .proyectos-carousel-container {
+        padding: 0 50px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
     
     .sobre-mi-content {
         grid-template-columns: 1fr;
@@ -1093,9 +1365,64 @@ img {
         width: 100%;
     }
     
-    .servicios-grid,
-    .proyectos-grid {
+    .servicios-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .proyectos-carousel-container {
+        padding: 0 40px;
+    }
+    
+    .proyectos-grid {
+        gap: var(--spacing-md);
+    }
+    
+    .proyectos-grid .proyecto-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+    
+    .proyecto-card {
+        height: auto;
+        min-height: 600px;
+    }
+    
+        .proyecto-card-front,
+        .proyecto-card-back {
+            min-height: 600px;
+        }
+    
+        .proyecto-content {
+            padding: var(--spacing-md);
+        }
+    
+        .proyecto-image {
+            padding-bottom: 50%;
+        }
+    
+        .proyecto-description {
+            font-size: var(--text-sm);
+            line-height: 1.5;
+        }
+    
+        .proyecto-precio {
+            padding: var(--spacing-sm) var(--spacing-md);
+            gap: 0.15rem;
+        }
+    
+        .proyecto-links {
+            padding: var(--spacing-md);
+            gap: var(--spacing-sm);
+        }
+    
+        .proyecto-links .btn-cta {
+            padding: 0.625rem 1.25rem;
+            font-size: var(--text-sm);
+        }
+    
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
     }
     
     .skills-grid {
@@ -1160,8 +1487,44 @@ img {
         padding: var(--spacing-2xl) 0;
     }
     
-    /* Forzar visibilidad de todos los elementos en mobile pequeño */
-    * {
+        .proyectos-carousel-container {
+            padding: 0 30px;
+        }
+    
+        .proyecto-card {
+            min-height: 550px;
+        }
+    
+        .proyecto-card-front,
+        .proyecto-card-back {
+            min-height: 550px;
+        }
+    
+        .proyecto-title {
+            font-size: var(--text-lg);
+        }
+    
+        .proyecto-description {
+            font-size: 0.875rem;
+        }
+    
+        .proyecto-precio {
+            padding: var(--spacing-xs) var(--spacing-sm);
+        }
+    
+        .tag {
+            padding: 0.2rem 0.6rem;
+            font-size: 0.7rem;
+        }
+    
+    /* Forzar visibilidad de elementos críticos en mobile pequeño (sin afectar el menú) */
+    .proyecto-card,
+    .proyecto-placeholder,
+    .contacto-form,
+    .contacto-detail,
+    .servicio-card,
+    .stat-card,
+    .morph-shape {
         opacity: 1 !important;
         visibility: visible !important;
     }
@@ -1172,6 +1535,32 @@ img {
     .contacto-detail,
     .servicio-card{
         transform: none !important;
+    }
+
+    /* Ajustes para mostrar todo el contenido del card en móvil */
+    .proyecto-tags {
+        display: none;
+    }
+
+    .precio-valor {
+        font-size: var(--text-base);
+        line-height: 1.2;
+    }
+
+    .precio-usd {
+        font-size: var(--text-xs);
+        opacity: 0.9;
+    }
+
+    .proyecto-precio {
+        gap: 0.1rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .proyecto-card-front,
+    .proyecto-card-back {
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
