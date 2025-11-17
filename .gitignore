@@ -1,0 +1,63 @@
+/* .gitignore para Portafolio Frontend */
+
+# Archivos del sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependencias (si decides usar npm en el futuro)
+node_modules/
+jspm_packages/
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Build (si decides usar build tools)
+dist/
+build/
+
+# Backups
+*.backup
+*.bak
+*.old
+
+# Archivos temporales
+tmp/
+temp/
+*.tmp
+
+# Archivos de caché
+.cache/
+.parcel-cache/
+
+# Coverage
+coverage/
+*.lcov
+
+# Archivos específicos del proyecto
+# (Descomentar si necesitas ignorar algún archivo específico)
+# config/local.json
