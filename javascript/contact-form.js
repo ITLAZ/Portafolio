@@ -10,7 +10,14 @@ const FORM_CONFIG = {
     minMessageLength: 10,
     maxMessageLength: 1000,
     emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    submitDelay: 1500 // Simular envío del formulario
+    submitDelay: 1500, // Simular envío del formulario
+    
+    // ⚠️ CONFIGURACIÓN DE EMAILJS - Reemplazar con tus credenciales
+    emailjs: {
+        publicKey: 'PN0yT4tiguP_eNyTC',      // Obtener de EmailJS Dashboard
+        serviceId: 'service_xo40db9',       // ID del servicio de email
+        templateId: 'template_6wlyxmc',      // ID de la plantilla
+    }
 };
 
 // ==================== Clase Principal del Formulario ====================
@@ -303,36 +310,54 @@ class ContactForm {
         }
     }
 
-    // ==================== Envío de Datos (Simulado) ====================
+    // ==================== Envío de Datos con EmailJS ====================
     async submitFormData(data) {
-        // Simular una petición HTTP
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                // Simular éxito
-                console.log('📧 Datos del formulario:', data);
-                resolve({ success: true });
-                
-                // Para simular error, descomenta:
-                // reject(new Error('Error de red'));
-            }, FORM_CONFIG.submitDelay);
-        });
-
-        // En producción, usarías fetch o axios:
-        /*
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-            throw new Error('Error en la petición');
+        // Verificar que EmailJS esté configurado
+        if (!window.emailjs) {
+            throw new Error('EmailJS no está cargado. Verifica la conexión a internet.');
         }
 
-        return await response.json();
-        */
+        // Verificar configuración
+        const config = FORM_CONFIG.emailjs;
+        if (config.publicKey === 'TU_PUBLIC_KEY' || 
+            config.serviceId === 'TU_SERVICE_ID' || 
+            config.templateId === 'TU_TEMPLATE_ID') {
+            console.warn('⚠️ EmailJS no está configurado. Usando modo de prueba.');
+            
+            // Modo de prueba (simular envío)
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    console.log('📧 Datos del formulario (MODO PRUEBA):', data);
+                    resolve({ success: true });
+                }, FORM_CONFIG.submitDelay);
+            });
+        }
+
+        try {
+            // Preparar parámetros para EmailJS
+            const templateParams = {
+                from_name: data.nombre,
+                from_email: data.email,
+                subject: data.asunto,
+                message: data.mensaje,
+                to_email: 'j.ignacio.tapia.l@gmail.com'
+            };
+
+            // Enviar email con EmailJS
+            const response = await emailjs.send(
+                config.serviceId,
+                config.templateId,
+                templateParams,
+                config.publicKey
+            );
+
+            console.log('✅ Email enviado correctamente:', response);
+            return { success: true, response };
+
+        } catch (error) {
+            console.error('❌ Error al enviar email:', error);
+            throw new Error(`Error al enviar el mensaje: ${error.text || error.message}`);
+        }
     }
 
     // ==================== Resetear Formulario ====================
@@ -452,8 +477,33 @@ function createHoneypot() {
     }
 }
 
+// ==================== Inicialización de EmailJS ====================
+function initEmailJS() {
+    if (window.emailjs) {
+        const config = FORM_CONFIG.emailjs;
+        
+        // Solo inicializar si hay una clave válida configurada
+        if (config.publicKey !== 'TU_PUBLIC_KEY') {
+            try {
+                emailjs.init(config.publicKey);
+                console.log('✅ EmailJS inicializado correctamente');
+            } catch (error) {
+                console.error('❌ Error al inicializar EmailJS:', error);
+            }
+        } else {
+            console.warn('⚠️ EmailJS no configurado. El formulario funcionará en modo de prueba.');
+            console.warn('📖 Consulta SETUP_EMAILJS.md para instrucciones de configuración.');
+        }
+    } else {
+        console.error('❌ EmailJS no está cargado. Verifica la conexión a internet.');
+    }
+}
+
 // ==================== Inicialización ====================
 function initContactForm() {
+    // Inicializar EmailJS
+    initEmailJS();
+    
     // Crear instancia del formulario
     const contactForm = new ContactForm('contactForm');
     
